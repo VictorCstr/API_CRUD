@@ -1,45 +1,71 @@
-const {Pets, Donos} = require('../models/index')
+const {Donos} = require('../models/index')
 
 const donosController = {
     listarVarios: async (req,res) => {
-        const listaDonos = await Donos.findAll()
+        await Donos.findAll()
+        .then(response => {
+            return res.status(200).json(response);
+        })
+        .catch(error => {
+        return res.status(500).json(error);
+          })
     },
 
     listarUm: async(req,res) => {
         const { id } = req.params
-        const DonoUnico = await Pets.findOne({
-            where: id
+         await Donos.findOne({
+            where: {id}
         })
-        res.status(200).json(DonoUnico)
+        .then(response => {
+            return res.status(200).json(response);
+        })
+        .catch(error => {
+        return res.status(500).json(error);
+          })
     },
 
     cadastrar: async(req,res) => {
         const {nome,telefone} = req.body
-        const novoDono = await Donos.create({
+         await Donos.create({
             nome,
            telefone
         })
-        res.status(201).json(novoDono)
+        .then(response => {
+            return res.status(200).json(response);
+        })
+        .catch(error => {
+        return res.status(500).json(error);
+          })
     },
 
     atualizar: async(req,res) => {
         const {id} = req.params
         const {nome,telefone} = req.body
-        const donoAtualizado = await Donos.update({
-            nome,
-            telefone
-            },{
-                where: id
+        await Donos.update({
+        nome,
+        telefone
+        },{
+            where: {id}
+        })
+        .then(response => {
+            return res.status(200).json("Os dados do Dono foram atualizados!");
+        })
+        .catch(error => {
+        return res.status(500).json(error);
             })
-        res.status(200).json(donoAtualizado)
     },
 
     excluir: async(req,res) => {
         const {id} = req.params
-        await Donos.detroy({
-            where: id
+        await Donos.destroy({
+            where: {id}
         })
-        res.status(200).send('Dono excluido do banco de dados com sucesso!')
+        .then(response => {
+            return res.status(200).json("Os dados do Dono foram excluidos!");
+        })
+        .catch(error => {
+        return res.status(500).json(error);
+          })
     }
 }
 
