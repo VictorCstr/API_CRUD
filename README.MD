@@ -1,0 +1,2 @@
+Dependencias:
+Express, Sequelize, Nodemon
