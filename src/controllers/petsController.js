@@ -22,7 +22,7 @@ const petsController = {
         })
         res.status(200).json(listaPets)
     } catch(error){
-        res.status(404).json("Houve algum erro, contate o administrador do sistema!")
+        res.status(500).json("Houve algum erro, contate o administrador do sistema!")
     }
 
     },
